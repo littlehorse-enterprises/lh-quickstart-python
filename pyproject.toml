@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-littlehorse-client = "^0.5"
+littlehorse-client = "^0.5.1"
 
 [build-system]
 requires = ["poetry-core"]

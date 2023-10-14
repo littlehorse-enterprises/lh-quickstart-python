@@ -2,65 +2,73 @@
 <img alt="LH" src="https://littlehorse.dev/img/logo.jpg" width="50%">
 </p>
 
-## Quickstart for Python
+# LittleHorse Python QuickStart
 
-### Dependencies
+This repo contains a minimal example to get you started using LittleHorse in python. You can run this example in two ways:
 
-- Install python.
-- Install [poetry](https://python-poetry.org/): `brew install poetry`
+1. Using a LittleHorse Server deployed in a cloud sandbox (to get one, contact `info@littlehorse.io`).
+2. Using a local deployment of a LittleHorse Server (instructions below).
 
-### Initialize
+## Prerequisites
 
+### Python Setup
+
+First, you need to install python and also create a python environment that has the `littlehorse-client` pip package. To do that, you have two options:
+
+Via `pip`:
+```
+pip install littlehorse-client==0.5.1
+```
+
+Or, via `poetry` using the configuration files in this repo:
 ```
 poetry install
+poetry shell # Don't forget this step!
 ```
 
-### Running Locally
+### LittleHorse CLI
 
-Install `lhctl`:
-
-```
-go install github.com/littlehorse-enterprises/littlehorse/lhctl@latest
-```
-
-Verify the installation:
+Install the LittleHorse CLI:
 
 ```
-lhctl
+brew install littlehorse-enterprises/lh/lhctl
 ```
 
-Start a LH Server with:
+### Local LH Server Setup
+
+If you have obtained a private LH Cloud Sandbox, follow the configuration instructions you received from the LittleHorse Team and skip this step.
+
+To run a LittleHorse Server locally in one command, you can run:
 
 ```
 docker run --name littlehorse -d -p 2023:2023 public.ecr.aws/littlehorse/lh-standalone:latest
 ```
 
-When you run the LH Server according to the command above, the API Host is `localhost` and the API Port is `2023`.
-Now configure `~/.config/littlehorse.config`:
+Using the local LittleHorse Server does not require any further configuration.
+
+### Verifying Setup
+
+You should be able to contact the LH Server:
 
 ```
-LHC_API_HOST=localhost
-LHC_API_PORT=2023
-```
-
-You can confirm that the Server is running via:
-
-```
-lhctl search wfSpec
-```
-
-Result:
-
-```
+-> lhctl search wfSpec
 {
-  "results": []
+    "results": []
 }
 ```
 
-Now let's run an example
+And you should be able to import the `littlehorse` python package:
 
 ```
-poetry shell
+-> python
+>>> import littlehorse
+>>>
+```
+
+## Running the Example
+
+
+```
 python -m quickstart.main
 ```
 
