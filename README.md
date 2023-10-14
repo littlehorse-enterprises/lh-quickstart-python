@@ -11,10 +11,14 @@
     - [Local LH Server Setup](#local-lh-server-setup)
     - [Verifying Setup](#verifying-setup)
   - [Running the Example](#running-the-example)
-  - [Explaining the Code](#explaining-the-code)
   - [Advanced Topics](#advanced-topics)
     - [Inspect the TaskRun](#inspect-the-taskrun)
+    - [Search for Someone's Workflow](#search-for-someones-workflow)
+    - [NodeRuns and TaskRuns](#noderuns-and-taskruns)
+    - [Debugging Errors](#debugging-errors)
   - [Next Steps](#next-steps)
+
+**Get started in under 5 minutes, or your money back!** :wink:
 
 This repo contains a minimal example to get you started using LittleHorse in python. You can run this example in two ways:
 
@@ -64,7 +68,7 @@ To run a LittleHorse Server locally in one command, you can run:
 docker run --name littlehorse -d -p 2023:2023 public.ecr.aws/littlehorse/lh-standalone:latest
 ```
 
-Using the local LittleHorse Server does not require any further configuration.
+Using the local LittleHorse Server takes about 15-25 seconds to start up, but it does not require any further configuration.
 
 ### Verifying Setup
 
@@ -84,6 +88,8 @@ And you should be able to import the `littlehorse` python package:
 >>> import littlehorse
 >>>
 ```
+
+If you _can't_ get the above to work, please let us know at `info@littlehorse.io`. We will create a community slack for support soon.
 
 ## Running the Example
 
@@ -125,10 +131,10 @@ Note that the status is `RUNNING`! Why hasn't it completed? That's because we ha
 lhctl search taskRun --taskDefName greet --status TASK_SCHEDULED
 ```
 
-Now let's start our worker, shall we? Please run:
+Now let's start our worker, so that our blocked `WfRun` can finish:
 
 ```
-python -m quickstart.run_worker
+python -m quickstart.worker
 ```
 
 Once the worker starts up, please open another terminal and inspect our `WfRun` again:
@@ -143,46 +149,113 @@ Voila! It's completed. You can also verify that the Task Queue is empty now that
 lhctl search taskRun --taskDefName greet --status TASK_SCHEDULED
 ```
 
-## Explaining the Code
-
-
-
 ## Advanced Topics
 
-Here are some cool commands which scratch the surface of observability offered to you by LittleHorse. Note that we are _almost_ done with a UI which will let you do this via click-ops rather than bash-ops. But anyways, the hard part is done, which is actually storing and indexing the data.
+You have now passed the requirements to reach the level of Jedi Youngling. Want to become a Padawan, or even a Knight? Then keep reading!
+
+Here are some cool commands which scratch the surface of observability offered to you by LittleHorse. Note that we are _almost_ done with a UI which will let you do this via click-ops rather than bash-ops.
+
+Also, note that everything we are doing here can be done programmatically via our SDK's, but it's easier to demonstrate with `lhctl`.
 
 ### Inspect the TaskRun
 
-
+Let's find the completed `TaskRun`:
 
 ```
-# Find your completed TaskRun
 lhctl search taskRun --taskDefName greet --status TASK_SUCCESS
-
-# Inspect the results of the TaskRun. A few things to note:
-
-# Find completed WfRun's. You should see your favorite ID here!
-lhctl search wfRun --wfSpecName quickstart --status COMPLETED
-
-# Search for obi-wan's workflow
-lhctl search variable --varType STR --name input-name --value obi-wan
 ```
 
+Take the output from above, and inspect it! Notice that you can see the input variables and also the output, which is a greeting string.
+
 ```
-# This call shows the workflow specification
-lhctl get wfSpec example-basic
+lhctl get taskRun <wf_run_id> <task_guid>
+```
 
-# This call shows the result
-lhctl get wfRun <wf run id>
+### Search for Someone's Workflow
 
-# Inspect the first NodeRun of the WfRun
-lhctl get nodeRun <wf run id> 0 1
+Remember we passed an `input-name` variable to our workflow? If you look in `register_workflow.py`, specifically the `get_workflow()` function, you can see that we created an Index on the variable. This means we can search for variables by their value!
 
-# This shows the task run information
+```
+lhctl search variable --varType STR --wfSpecName quickstart --name input-name --value obi-wan
+```
+
+And the following should return an empty list (unless, of course, you do `lhctl run quickstart input-name asdfasdf`)
+
+```
+lhctl search variable --varType STR --wfSpecName quickstart --name input-name --value asdfasdf
+```
+
+### NodeRuns and TaskRuns
+
+Let's look at our `WfRun`:
+
+```
+-> lhctl get wfRun <wfRunId>
+
+```
+
+There are a few things to note:
+* The `status` is `COMPLETED`
+* There is one `ThreadRun`. That makes sense, since we didn't add multi-threading to the `WfRun`.
+* The `currentNodePosition` is 2.
+
+What is a `NodeRun`? A `NodeRun` is a step in a `ThreadRun`. Our workflow's main `ThreadRun` has three steps:
+
+1. The `ENTRYPOINT` node
+2. The `TASK` node to execute the `greet` task
+3. The `EXIT` node, which wraps things up.
+
+Let's see all of our nodes via:
+
+```
+lhctl list nodeRun <wfRunId>
+```
+
+Note that the second `nodeRun` has a `task` field, points to the `TaskRun` we saw earlier. You can find it via:
+
+```
 lhctl get taskRun <wfRunId> <taskGuid>
 ```
 
+### Debugging Errors
+
+What happens if a Task Run fails? Edit `worker.py` and make the `greeting()` function throw an error of choice (maybe `raise RuntimeException()` or something like that). Then, restart the worker via `python -m worker`.
+
+Run another workflow:
+
+```
+lhctl run quickstart input-name anakin
+```
+
+Then, `lhctl get wfRun <wfRunId>` should show that the workflow failed. It should also show that `currentNodePosition` for `ThreadRun` `0` is `1`. Let's inspect the NodeRun:
+
+```
+lhctl get nodeRun <wfRunId> 0 1
+```
+
+It's a `TaskRun`! Let's see what happened:
+
+```
+lhctl get taskRun <wfRunId> <taskGuid>
+```
+
+As you can see, you can get the stack trace through the LittleHorse API.
+
+You can also find the `TaskRun` by searching for failed tasks. Remember that all of this will be presented in a super-cool UI once we have it finished.
+
+```
+lhctl search taskRun --taskDefName greet --status TASK_ERROR
+
+# or search for workflows by their status
+lhctl search wfRun --wfSpecName quickstart --status ERROR
+lhctl search wfRun --wfSpecName quickstart --status COMPLETED
+```
+
+If you want to handle such failures in your workflow, check our [exception handling documentation](www.littlehorse.dev/docs/concepts/exception-handling).
+
 ## Next Steps
+
+If you've made it this far, then it's time you become a full-fledged LittleHorse Knight!
 
 Want to do more cool stuff with LittleHorse and Python? You can find more Python examples [here](https://github.com/littlehorse-enterprises/littlehorse/tree/master/sdk-python). This example only shows rudimentary features like tasks and variables. Some additional features not covered in this quickstart include:
 
