@@ -326,13 +326,13 @@ six = ">=1.13,<2.0"
 
 [[package]]
 name = "littlehorse-client"
-version = "0.5.1"
+version = "0.5.2"
 description = "LittleHorse is a high-performance microservice orchestration engine that allows developers to build scalable, maintainable, and observable applications"
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "littlehorse_client-0.5.1-py3-none-any.whl", hash = "sha256:23786b64d12aa8af4c8430a49b4b98c51b832c700c33dfaa26fd9f2a2592d17c"},
-    {file = "littlehorse_client-0.5.1.tar.gz", hash = "sha256:93a7dbaa114797e637424c46c016cefc5b3762ae1c8b507dc8be267cd76efea5"},
+    {file = "littlehorse_client-0.5.2-py3-none-any.whl", hash = "sha256:3dcf39a56b1941a3576f3bd83631c576dacbef83dbe75895921b185a07c06709"},
+    {file = "littlehorse_client-0.5.2.tar.gz", hash = "sha256:b65d7f2e743d4430388df643f92a663fc2bcfa022d37fd90d149e6e0ce472bba"},
 ]
 
 [package.dependencies]
@@ -427,4 +427,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "9ec6996ec337f9d1c64fbc057b68464fa2592ed9a4ad6315754e16269904c891"
+content-hash = "5d6b3085bb4c3f22979bdffab70c1a031fdbcffdb701967d0b725079b884c0b6"
