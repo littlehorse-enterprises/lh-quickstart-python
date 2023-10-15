@@ -40,7 +40,7 @@ We need a python environment that has the `littlehorse-client` pip package. To d
 Install via `pip`:
 
 ```
-pip install littlehorse-client==0.5.1
+pip install littlehorse-client==0.5.2
 ```
 
 Or, install via `poetry` using the configuration files in this repo:
@@ -191,7 +191,30 @@ Let's look at our `WfRun`:
 
 ```
 -> lhctl get wfRun <wfRunId>
-
+{
+  "id": "4a139cd6326944d8a2f2021385a259e0",
+  "wfSpecName": "quickstart",
+  "wfSpecVersion": 0,
+  "status": "COMPLETED",
+  "startTime": "2023-10-15T04:56:26.292Z",
+  "endTime": "2023-10-15T04:56:57.158Z",
+  "threadRuns": [
+    {
+      "number": 0,
+      "status": "COMPLETED",
+      "threadSpecName": "entrypoint",
+      "startTime": "2023-10-15T04:56:26.350Z",
+      "endTime": "2023-10-15T04:56:57.154Z",
+      "childThreadIds": [],
+      "haltReasons": [],
+      "currentNodePosition": 2,
+      "handledFailedChildren": [],
+      "type": "ENTRYPOINT"
+    }
+  ],
+  "pendingInterrupts": [],
+  "pendingFailures": []
+}
 ```
 
 There are a few things to note:
