@@ -25,8 +25,8 @@
 
 This repo contains a minimal example to get you started using LittleHorse in python. You can run this example in two ways:
 
-1. Using a LittleHorse Server deployed in a cloud sandbox (to get one, contact `info@littlehorse.io`).
-2. Using a local deployment of a LittleHorse Server (instructions below).
+1. Using a local deployment of a LittleHorse Server (instructions below, requires one `docker` command).
+2. Using a LittleHorse Server deployed in a cloud sandbox (to get one, contact `info@littlehorse.io`).
 
 In this example, we will run a classic "Greeting" workflow as a quickstart. The workflow takes in one input variable (`input-name`), and calls a `greet` Task Function with the specified `input-name` as input.
 
@@ -34,11 +34,11 @@ In this example, we will run a classic "Greeting" workflow as a quickstart. The 
 
 Your system needs:
 * `python` 3.8 or later
-* `brew` (to install `lhctl`).
+* `brew` (to install `lhctl`). This has been tested on Linux and Mac.
 
 ## Python Setup
 
-We need a python environment that has the `littlehorse-client` pip package. To do that, you have two options:
+We need a python environment that has the `littlehorse-client` pip package. We recommend making a python virtual environmen. To install the `littlehorse` package, you have two options:
 
 Install via `pip`:
 
@@ -59,6 +59,12 @@ Install the LittleHorse CLI:
 
 ```
 brew install littlehorse-enterprises/lh/lhctl
+```
+
+Alternatively, if you have `go` but don't have homebrew, you can:
+
+```
+go install https://github.com/littlehorse-enterprises/littlehorse/lhctl@latest
 ```
 
 ## Local LH Server Setup
@@ -104,6 +110,9 @@ First, we run `register_workflow.py`, which does two things:
 
 1. Registers a `TaskDef` named `greet` with LittleHorse.
 2. Registers a `WfSpec` named `quickstart` with LittleHorse.
+
+
+A [`WfSpec`](https://littlehorse.dev/docs/concepts/workflows) specifies a process which can be orchestrated by LittleHorse. A [`TaskDef`](https://littlehorse.dev/docs/concepts/tasks) tells LittleHorse about a specification of a task that can be executed as a step in a `WfSpec`.
 
 ```
 python -m quickstart.register_workflow
