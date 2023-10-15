@@ -23,7 +23,9 @@
 
 **Get started in under 5 minutes, or your money back!** :wink:
 
-This repo contains a minimal example to get you started using LittleHorse in python. You can run this example in two ways:
+This repo contains a minimal example to get you started using LittleHorse in python. [LittleHorse](www.littlehorse.dev) is a high-performance orchestration engine which lets you build workflow-driven microservice applications with ease.
+
+You can run this example in two ways:
 
 1. Using a local deployment of a LittleHorse Server (instructions below, requires one `docker` command).
 2. Using a LittleHorse Server deployed in a cloud sandbox (to get one, contact `info@littlehorse.io`).
@@ -38,7 +40,7 @@ Your system needs:
 
 ## Python Setup
 
-We need a python environment that has the `littlehorse-client` pip package. We recommend making a python virtual environmen. To install the `littlehorse` package, you have two options:
+We need a python environment that has the `littlehorse-client` pip package. We recommend making a python virtual environment. To install the `littlehorse` package, you have two options:
 
 Install via `pip`:
 
@@ -110,7 +112,6 @@ First, we run `register_workflow.py`, which does two things:
 
 1. Registers a `TaskDef` named `greet` with LittleHorse.
 2. Registers a `WfSpec` named `quickstart` with LittleHorse.
-
 
 A [`WfSpec`](https://littlehorse.dev/docs/concepts/workflows) specifies a process which can be orchestrated by LittleHorse. A [`TaskDef`](https://littlehorse.dev/docs/concepts/tasks) tells LittleHorse about a specification of a task that can be executed as a step in a `WfSpec`.
 
