@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO)
 # The logic for our WfSpec (worfklow) lives in this function!
 def get_workflow() -> Workflow:
 
-    def quickstart_workflow(wf: WorkflowThread) -> None:        
+    def quickstart_workflow(wf: WorkflowThread) -> None:
         # Define an input variable
         the_name = wf.add_variable("input-name", VariableType.STR).searchable()
 
