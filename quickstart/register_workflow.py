@@ -3,7 +3,6 @@ import logging
 import littlehorse
 from littlehorse.config import LHConfig
 from littlehorse.model.common_enums_pb2 import VariableType
-from littlehorse.model.common_wfspec_pb2 import IndexType
 from littlehorse.workflow import Workflow, WorkflowThread
 
 from quickstart.worker import greeting
@@ -16,10 +15,7 @@ def get_workflow() -> Workflow:
 
     def quickstart_workflow(wf: WorkflowThread) -> None:        
         # Define an input variable
-        the_name = wf.add_variable("input-name", VariableType.STR)
-
-        # (Optional) Make the variable searchable!
-        the_name.with_index(index_type=IndexType.LOCAL_INDEX).persistent()
+        the_name = wf.add_variable("input-name", VariableType.STR).searchable()
 
         # Execute the 'greet' task and pass in the variable as an argument.
         wf.execute("greet", the_name)
