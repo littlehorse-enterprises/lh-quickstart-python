@@ -40,12 +40,27 @@ Your system needs:
 
 ## Python Setup
 
-We need a python environment that has the `littlehorse-client` pip package. We recommend making a python virtual environment. To install the `littlehorse` package, you can use pip:
+We need a python environment that has the `littlehorse-client` pip package. We recommend making a python virtual environment. To install the `littlehorse` package, you can use a package manager of your choice. We show you below how to do it with `pip` or `poetry`:
 
-Install via `pip`:
+The first option is to install via `pip`:
 
 ```
-pip install littlehorse-client==0.7.2
+pip install littlehorse-client==0.9.0
+```
+
+Alternatively, you can install via `poetry` using our `pyproject.toml` file as follows:
+
+```
+poetry install
+poetry shell
+```
+
+After installing our Python SDK via your preferred method, you should be able to import the `littlehorse` python package:
+
+```
+-> python
+>>> import littlehorse
+>>>
 ```
 
 ## LittleHorse CLI
@@ -59,7 +74,7 @@ brew install littlehorse-enterprises/lh/lhctl
 Alternatively, if you have `go` but don't have homebrew, you can:
 
 ```
-go install https://github.com/littlehorse-enterprises/littlehorse/lhctl@0.7.2
+go install https://github.com/littlehorse-enterprises/littlehorse/lhctl@0.9.0
 ```
 
 ## Local LH Server Setup
@@ -68,29 +83,22 @@ If you have obtained a private LH Cloud Sandbox, you can skip this step and just
 
 To run a LittleHorse Server locally in one command, you can run:
 
+To run a LittleHorse Server locally in one command, you can run:
+
 ```
-docker run --name littlehorse -d -p 2023:2023 -p 8080:8080 ghcr.io/littlehorse-enterprises/littlehorse/lh-standalone:0.7.2
+docker run --name littlehorse -d -p 2023:2023 -p 8080:8080 ghcr.io/littlehorse-enterprises/littlehorse/lh-standalone:0.9.0
 ```
 
-Using the local LittleHorse Server takes about 15-25 seconds to start up, but it does not require any further configuration.
+Using the local LittleHorse Server takes about 15-25 seconds to start up, but it does not require any further configuration. Please note that the `lh-standalone` docker image requires at least 1.5GB of memory to function properly. This is because it runs kafka, the LH Server, and the LH Dashboard (2 JVM's and a NextJS app) all in one container.
 
 ## Verifying Setup
 
 At this point, whether you are using a local Docker deployment or a private LH Cloud Sandbox, you should be able to contact the LH Server:
 
 ```
--> lhctl search wfSpec
-{
-    "results": []
-}
-```
-
-And you should be able to import the `littlehorse` python package:
-
-```
--> python
->>> import littlehorse
->>>
+->lhctl version
+lhctl version: 0.9.0
+Server version: 0.9.0
 ```
 
 If you _can't_ get the above to work, please let us know at `info@littlehorse.io`. We will create a community slack for support soon.
@@ -122,7 +130,7 @@ You can inspect your `WfSpec` with `lhctl` as follows. It's ok if the response d
 lhctl get wfSpec quickstart
 ```
 
-Now, go to your dashboard in your browser (`http://localhost:8080`) and refresh the page. Scroll down, and double-click on the `quickstart` WfSpec. You should see something that looks like a flow-chart. That is your Workflow Specification!
+Now, go to your dashboard in your browser (`http://localhost:8080`) and refresh the page. Click on the `quickstart` WfSpec. You should see something that looks like a flow-chart. That is your Workflow Specification!
 
 ## Run Workflow
 

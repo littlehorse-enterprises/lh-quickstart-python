@@ -6,8 +6,8 @@ authors = ["LittleHorse <engineering@littlehorse.io>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
-littlehorse-client = "0.5.2"
+python = ">=3.11,<3.13"
+littlehorse-client = "0.9.0"
 
 [build-system]
 requires = ["poetry-core"]
