@@ -155,7 +155,7 @@ Now let's start our worker, so that our blocked `WfRun` can finish:
 
 ```
 python -m quickstart.worker
-```0
+```
 
 Once the worker starts up, please open another terminal and inspect our `WfRun` again:
 
