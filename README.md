@@ -41,7 +41,7 @@ We need a python environment that has the `littlehorse-client` pip package. We r
 The first option is to install via `pip`:
 
 ```
-pip install littlehorse-client==0.10.0
+pip install littlehorse-client==0.11.0
 ```
 
 Alternatively, you can install via `poetry` using our `pyproject.toml` file as follows:
@@ -67,12 +67,6 @@ Install the LittleHorse CLI:
 brew install littlehorse-enterprises/lh/lhctl
 ```
 
-Alternatively, if you have `go` but don't have homebrew, you can:
-
-```
-go install https://github.com/littlehorse-enterprises/littlehorse/lhctl@0.10.0
-```
-
 ## Local LH Server Setup
 
 If you have obtained a private LH Cloud Sandbox, you can skip this step and just follow the configuration instructions you received from the LittleHorse Team (remember to set your environment variables!).
@@ -82,7 +76,7 @@ To run a LittleHorse Server locally in one command, you can run:
 To run a LittleHorse Server locally in one command, you can run:
 
 ```
-docker run --name littlehorse -d -p 2023:2023 -p 8080:8080 ghcr.io/littlehorse-enterprises/littlehorse/lh-standalone:0.10.0
+docker run --name littlehorse -d -p 2023:2023 -p 8080:8080 ghcr.io/littlehorse-enterprises/littlehorse/lh-standalone:0.11.0
 ```
 
 Using the local LittleHorse Server takes about 15-25 seconds to start up, but it does not require any further configuration. Please note that the `lh-standalone` docker image requires at least 1.5GB of memory to function properly. This is because it runs kafka, the LH Server, and the LH Dashboard (2 JVM's and a NextJS app) all in one container.
@@ -93,8 +87,8 @@ At this point, whether you are using a local Docker deployment or a private LH C
 
 ```
 ->lhctl version
-lhctl version: 0.10.0
-Server version: 0.10.0
+lhctl version: 0.11.0
+Server version: 0.11.0
 ```
 
 If you _can't_ get the above to work, please let us know at `info@littlehorse.io`. We will create a community slack for support soon.
