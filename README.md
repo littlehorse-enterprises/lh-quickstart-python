@@ -14,7 +14,11 @@
   - [Register Workflow](#register-workflow)
   - [Run Workflow](#run-workflow)
   - [Run Task Worker](#run-task-worker)
-- [or search for workflows by their status](#or-search-for-workflows-by-their-status)
+- [Advanced Topics](#advanced-topics)
+  - [Inspect the TaskRun](#inspect-the-taskrun)
+  - [Search for Someone's Workflow](#search-for-someones-workflow)
+  - [NodeRuns and TaskRuns](#noderuns-and-taskruns)
+  - [Debugging Errors](#debugging-errors)
 - [Next Steps](#next-steps)
 
 **Get started in under 5 minutes, or your money back!** :wink:
@@ -41,7 +45,8 @@ We need a python environment that has the `littlehorse-client` pip package. We r
 The first option is to install via `pip`:
 
 ```
-pip install littlehorse-client==0.11.0
+pip install typing_extensions=4.12.2
+pip install littlehorse-client==0.11.2
 ```
 
 Alternatively, you can install via `poetry` using our `pyproject.toml` file as follows:
@@ -76,7 +81,7 @@ To run a LittleHorse Server locally in one command, you can run:
 To run a LittleHorse Server locally in one command, you can run:
 
 ```
-docker run --name littlehorse -d -p 2023:2023 -p 8080:8080 ghcr.io/littlehorse-enterprises/littlehorse/lh-standalone:0.11.0
+docker run --name littlehorse -d -p 2023:2023 -p 8080:8080 ghcr.io/littlehorse-enterprises/littlehorse/lh-standalone:0.11.2
 ```
 
 Using the local LittleHorse Server takes about 15-25 seconds to start up, but it does not require any further configuration. Please note that the `lh-standalone` docker image requires at least 1.5GB of memory to function properly. This is because it runs kafka, the LH Server, and the LH Dashboard (2 JVM's and a NextJS app) all in one container.
@@ -87,8 +92,8 @@ At this point, whether you are using a local Docker deployment or a private LH C
 
 ```
 ->lhctl version
-lhctl version: 0.11.0
-Server version: 0.11.0
+lhctl version: 0.11.2 (Git SHA homebrew)
+Server version: 0.11.2
 ```
 
 If you _can't_ get the above to work, please let us know at `info@littlehorse.io`. We will create a community slack for support soon.
