@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "A Python quickstart guide to get LittleHorse up and running with an example "
 authors = ["LittleHorse <engineering@littlehorse.io>"]
 readme = "README.md"
+packages = [
+    { include = "quickstart" },
+]
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
