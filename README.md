@@ -45,7 +45,7 @@ We need a python environment that has the `littlehorse-client` pip package. We r
 The first option is to install via `pip`:
 
 ```
-pip install typing_extensions=4.12.2
+pip install typing_extensions==4.12.2
 pip install littlehorse-client==0.11.2
 ```
 
