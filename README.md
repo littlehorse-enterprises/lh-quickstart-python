@@ -35,8 +35,9 @@ In this example, we will run a classic "Greeting" workflow as a quickstart. The 
 # Prerequisites
 
 Your system needs:
-* `python` 3.8 or later
-* `brew` (to install `lhctl`). This has been tested on Linux and Mac.
+
+- `python` 3.8 or later
+- `brew` (to install `lhctl`). This has been tested on Linux and Mac.
 
 ## Python Setup
 
@@ -44,21 +45,21 @@ We need a python environment that has the `littlehorse-client` pip package. We r
 
 The first option is to install via `pip`:
 
-```
+```bash
 pip install typing_extensions==4.12.2
-pip install littlehorse-client==0.11.2
+pip install littlehorse-client==0.12.1
 ```
 
 Alternatively, you can install via `poetry` using our `pyproject.toml` file as follows:
 
-```
+```bash
 poetry install
 poetry shell
 ```
 
 After installing our Python SDK via your preferred method, you should be able to import the `littlehorse` python package:
 
-```
+```bash
 -> python
 >>> import littlehorse
 >>>
@@ -68,7 +69,7 @@ After installing our Python SDK via your preferred method, you should be able to
 
 Install the LittleHorse CLI:
 
-```
+```bash
 brew install littlehorse-enterprises/lh/lhctl
 ```
 
@@ -80,8 +81,8 @@ To run a LittleHorse Server locally in one command, you can run:
 
 To run a LittleHorse Server locally in one command, you can run:
 
-```
-docker run --name littlehorse -d -p 2023:2023 -p 8080:8080 ghcr.io/littlehorse-enterprises/littlehorse/lh-standalone:0.11.2
+```bash
+docker run --name littlehorse -d -p 2023:2023 -p 8080:8080 ghcr.io/littlehorse-enterprises/littlehorse/lh-standalone:0.12.1
 ```
 
 Using the local LittleHorse Server takes about 15-25 seconds to start up, but it does not require any further configuration. Please note that the `lh-standalone` docker image requires at least 1.5GB of memory to function properly. This is because it runs kafka, the LH Server, and the LH Dashboard (2 JVM's and a NextJS app) all in one container.
@@ -90,13 +91,11 @@ Using the local LittleHorse Server takes about 15-25 seconds to start up, but it
 
 At this point, whether you are using a local Docker deployment or a private LH Cloud Sandbox, you should be able to contact the LH Server:
 
-```
+```bash
 ->lhctl version
-lhctl version: 0.11.2 (Git SHA homebrew)
-Server version: 0.11.2
+lhctl version: 0.12.1 (Git SHA homebrew)
+Server version: 0.12.1
 ```
-
-If you _can't_ get the above to work, please let us know at `info@littlehorse.io`. We will create a community slack for support soon.
 
 **You should also be able to see the dashboard** at `https://localhost:8080`. It should be empty, but we will put some data in there soon when we run the workflow!
 
@@ -115,7 +114,7 @@ First, we run `register_workflow.py`, which does two things:
 
 A [`WfSpec`](https://littlehorse.dev/docs/concepts/workflows) specifies a process which can be orchestrated by LittleHorse. A [`TaskDef`](https://littlehorse.dev/docs/concepts/tasks) tells LittleHorse about a specification of a task that can be executed as a step in a `WfSpec`.
 
-```
+```bash
 python -m quickstart.register_workflow
 ```
 
@@ -129,9 +128,9 @@ Now, go to your dashboard in your browser (`http://localhost:8080`) and refresh 
 
 ## Run Workflow
 
-Now, let's run our first `WfRun`! Use `lhctl` to run an instance of our `WfSpec`. 
+Now, let's run our first `WfRun`! Use `lhctl` to run an instance of our `WfSpec`.
 
-```
+```bash
 # Run the 'quickstart' WfSpec, and set 'input-name' = "obi-wan"
 lhctl run quickstart input-name obi-wan
 ```
@@ -140,7 +139,7 @@ The response prints the initial status of the `WfRun`. Pull out the `id` and cop
 
 Let's look at our `WfRun` once again:
 
-```
+```bash
 lhctl get wfRun <wf_run_id>
 ```
 
@@ -148,7 +147,7 @@ If you would like to see it on the dashboard, refresh the `WfSpec` page and scro
 
 Note that the status is `RUNNING`! Why hasn't it completed? That's because we haven't yet started a worker which executes the `greet` tasks. Want to verify that? Let's search for all tasks in the queue which haven't been executed yet. You should see an entry whose `wfRunId` matches the Id from above:
 
-```
+```bash
 lhctl search taskRun --taskDefName greet --status TASK_SCHEDULED
 ```
 
@@ -158,19 +157,19 @@ You can also see the `TaskRun` node on the workflow. It's highlighted, meaning t
 
 Now let's start our worker, so that our blocked `WfRun` can finish:
 
-```
+```bash
 python -m quickstart.worker
 ```
 
 Once the worker starts up, please open another terminal and inspect our `WfRun` again:
 
-```
+```bash
 lhctl get wfRun <wf_run_id>
 ```
 
 Voila! It's completed. You can also verify that the Task Queue is empty now that the Task Worker executed all of the tasks:
 
-```
+```bash
 lhctl search taskRun --taskDefName greet --status TASK_SCHEDULED
 ```
 
@@ -188,13 +187,13 @@ Also, note that everything we are doing here can be done programmatically via ou
 
 Let's find the completed `TaskRun`:
 
-```
+```bash
 lhctl search taskRun --taskDefName greet --status TASK_SUCCESS
 ```
 
 Take the output from above, and inspect it! Notice that you can see the input variables and also the output, which is a greeting string.
 
-```
+```bash
 lhctl get taskRun <wf_run_id> <task_guid>
 ```
 
@@ -202,13 +201,13 @@ lhctl get taskRun <wf_run_id> <task_guid>
 
 Remember we passed an `input-name` variable to our workflow? If you look in `register_workflow.py`, specifically the `get_workflow()` function, you can see that we created an Index on the variable. This means we can search for variables by their value!
 
-```
+```bash 
 lhctl search variable --varType STR --wfSpecName quickstart --name input-name --value obi-wan
 ```
 
 And the following should return an empty list (unless, of course, you do `lhctl run quickstart input-name asdfasdf`)
 
-```
+```bash
 lhctl search variable --varType STR --wfSpecName quickstart --name input-name --value asdfasdf
 ```
 
@@ -216,7 +215,7 @@ lhctl search variable --varType STR --wfSpecName quickstart --name input-name --
 
 Let's look at our `WfRun`:
 
-```
+```bash
 -> lhctl get wfRun <wfRunId>
 {
   "id": "4a139cd6326944d8a2f2021385a259e0",
@@ -245,9 +244,10 @@ Let's look at our `WfRun`:
 ```
 
 There are a few things to note:
-* The `status` is `COMPLETED`
-* There is one `ThreadRun`. That makes sense, since we didn't add multi-threading to the `WfRun`.
-* The `currentNodePosition` is 2.
+
+- The `status` is `COMPLETED`
+- There is one `ThreadRun`. That makes sense, since we didn't add multi-threading to the `WfRun`.
+- The `currentNodePosition` is 2.
 
 What is a `NodeRun`? A `NodeRun` is a step in a `ThreadRun`. Our workflow's main `ThreadRun` has three steps:
 
@@ -257,13 +257,13 @@ What is a `NodeRun`? A `NodeRun` is a step in a `ThreadRun`. Our workflow's main
 
 Let's see all of our nodes via:
 
-```
+```bash
 lhctl list nodeRun <wfRunId>
 ```
 
 Note that the second `nodeRun` has a `task` field, points to the `TaskRun` we saw earlier. You can find it via:
 
-```
+```bash
 lhctl get taskRun <wfRunId> <taskGuid>
 ```
 
@@ -273,19 +273,19 @@ What happens if a Task Run fails? Edit `worker.py` and make the `greeting()` fun
 
 Run another workflow:
 
-```
+```bash
 lhctl run quickstart input-name anakin
 ```
 
 Then, `lhctl get wfRun <wfRunId>` should show that the workflow failed. It should also show that `currentNodePosition` for `ThreadRun` `0` is `1`. Let's inspect the NodeRun:
 
-```
+```bash
 lhctl get nodeRun <wfRunId> 0 1
 ```
 
 It's a `TaskRun`! Let's see what happened:
 
-```
+```bash
 lhctl get taskRun <wfRunId> <taskGuid>
 ```
 
@@ -293,7 +293,7 @@ As you can see, you can get the stack trace through the LittleHorse API.
 
 You can also find the `TaskRun` by searching for failed tasks. Remember that all of this will be presented in a super-cool UI once we have it finished.
 
-```
+```bash
 lhctl search taskRun --taskDefName greet --status TASK_FAILED
 
 # or search for workflows by their status
@@ -309,13 +309,13 @@ If you've made it this far, then it's time you become a full-fledged LittleHorse
 
 Want to do more cool stuff with LittleHorse and Python? You can find more Python examples [here](https://github.com/littlehorse-enterprises/littlehorse/tree/master/sdk-python). This example only shows rudimentary features like tasks and variables. Some additional features not covered in this quickstart include:
 
-* Conditionals
-* Loops
-* External Events (webhooks/signals etc)
-* Interrupts
-* User Tasks
-* Multi-Threaded Workflows
-* Workflow Exception Handling
+- Conditionals
+- Loops
+- External Events (webhooks/signals etc)
+- Interrupts
+- User Tasks
+- Multi-Threaded Workflows
+- Workflow Exception Handling
 
 We also have quickstarts in [Java](https://github.com/littlehorse-enterprises/lh-quickstart-java) and [Go](https://github.com/littlehorse-enterprises/lh-quickstart-go). Support for .NET is coming soon.
 

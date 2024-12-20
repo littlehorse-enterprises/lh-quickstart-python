@@ -337,21 +337,21 @@ six = ">=1.13,<2.0"
 
 [[package]]
 name = "littlehorse-client"
-version = "0.11.2"
+version = "0.12.1"
 description = "LittleHorse is a high-performance microservice orchestration engine that allows developers to build scalable, maintainable, and observable applications"
 optional = false
-python-versions = "<3.13,>=3.9"
+python-versions = "<3.14,>=3.9"
 files = [
-    {file = "littlehorse_client-0.11.2-py3-none-any.whl", hash = "sha256:63f388567c5ca8c548f4395ba72c8976d5c774fbf3b99af185446638b2f1bf95"},
-    {file = "littlehorse_client-0.11.2.tar.gz", hash = "sha256:6832a1b60d4a172de9d1985e5f786a0294ba9c2f68d30cc58236521e0b40a914"},
+    {file = "littlehorse_client-0.12.1-py3-none-any.whl", hash = "sha256:eae79044674704fbcb96cf2a24ed8bab40fe4c7e1487214d2c1c5595310bf3d8"},
+    {file = "littlehorse_client-0.12.1.tar.gz", hash = "sha256:170ba74825fe1c2842a49e2da0609895bb18dac3b97598189874728f353fb1b8"},
 ]
 
 [package.dependencies]
-authlib = ">=1.2,<2.0"
-grpcio = ">=1.57,<2.0"
+authlib = ">=1.3,<2.0"
+grpcio = ">=1.56,<2.0"
 jproperties = ">=2.1,<3.0"
-protobuf = ">=4.23.4,<5.0.0"
-requests = ">=2.31,<3.0"
+protobuf = ">=4.23,<5.0"
+requests = ">=2.32,<3.0"
 
 [[package]]
 name = "protobuf"
@@ -447,4 +447,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.13"
-content-hash = "61672c646eaa0202f908605b7225f7e64f0e493f70b4a0de83bebf065afd4202"
+content-hash = "db8b9064d73bb14e5be741e8a7afc92f1214bbee9aa42cd5ded233cf3eec905c"
