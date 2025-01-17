@@ -9,9 +9,9 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.11,<3.13"
+python = ">=3.9,<3.14"
 typing_extensions = "^4.12.2"
-littlehorse-client = "0.12.1"
+littlehorse-client = "0.12.4"
 
 [build-system]
 requires = ["poetry-core"]
