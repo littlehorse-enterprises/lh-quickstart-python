@@ -19,7 +19,7 @@
 
 **Get started in under 5 minutes, or your money back!** 😉
 
-This repo contains a minimal example to get you started using LittleHorse in Java. [LittleHorse](https://littlehorse.io) is a high-performance orchestration engine which lets you build workflow-driven microservice applications with ease.
+This repo contains a minimal example to get you started using LittleHorse in Python. [LittleHorse](https://littlehorse.io) is a high-performance orchestration engine which lets you build workflow-driven microservice applications with ease.
 
 You can run this example in two ways:
 
@@ -203,7 +203,7 @@ If you've made it this far, then it's time you become a full-fledged LittleHorse
 
 Visit our [docs](https://littlehorse.io/docs) or learn more about LittleHorse [here](https://littlehorse.io/learn).
 
-Want to do more cool stuff with LittleHorse and Java? You can find more Java examples [here](https://github.com/littlehorse-enterprises/littlehorse/tree/master/examples). This example only shows rudimentary features like tasks and variables. Some additional features not covered in this quickstart include:
+Want to do more cool stuff with LittleHorse? You can find more examples [here](https://github.com/littlehorse-enterprises/littlehorse/tree/master/examples). This example only shows rudimentary features like tasks and variables. Some additional features not covered in this quickstart include:
 
 - Loops
 - Interrupts
