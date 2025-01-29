@@ -110,7 +110,7 @@ If you haven't done so already, at this point go ahead and clone this repository
 
 ## Register Metadata
 
-Let's run the `register_metadata.py` app, which does 3 things:
+Let's run the `register.py` app, which does 3 things:
 
 1. Registers the `verify-identity`, `notify-customer-verified`, and `notify-customer-not-verified` task definitions (`TaskDef`s) with the LittleHorse Server.
 2. Registers an `ExternalEventDef` named `identity-verified` with the LittleHorse Server.
@@ -119,7 +119,7 @@ Let's run the `register_metadata.py` app, which does 3 things:
 A [`WfSpec`](https://littlehorse.io/docs/server/concepts/workflows) specifies a process which can be orchestrated by LittleHorse. A [`TaskDef`](https://littlehorse.io/docs/server/concepts/tasks) tells LittleHorse about a specification of a task that can be executed as a step in a `WfSpec`.
 
 ```sh
-python -m quickstart.register_metadata
+python -m quickstart.register
 ```
 
 You can inspect your `WfSpec` with `lhctl` as follows. It's ok if the response doesn't make sense, we will see it soon!
