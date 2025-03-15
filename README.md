@@ -4,4 +4,4 @@
 
 # WARNING
 
-**This repo has been moved to:** https://github.com/littlehorse-enterprises/lh-examples/tree/main/quickstart/go
+**This repo has been moved to:** https://github.com/littlehorse-enterprises/lh-examples/tree/main/quickstart/python
