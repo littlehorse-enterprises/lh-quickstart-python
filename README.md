@@ -49,7 +49,7 @@ We need a python environment that has the `littlehorse-client` pip package. We r
 The first option is to install via `pip`:
 
 ```bash
-pip install typing_extension
+pip install typing_extensions
 pip install littlehorse-client
 ```
 
